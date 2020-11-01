@@ -32,6 +32,7 @@ namespace ActReport.UI
 
                 EmployeeViewModel _ => new MainWindow(),
                 ActivityViewModel _ => new ActivityWindow(),
+                CreateAndEditActivityViewModel _ => new CreateAndEditActivityWindow(),
 
                 _ => throw new InvalidOperationException($"Unkown ViewModel of type {viewModel}")
             };
