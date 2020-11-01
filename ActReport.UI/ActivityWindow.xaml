@@ -8,8 +8,49 @@
         Title="Tätigkeiten" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="4" Orientation="Vertical">
+            <TextBlock>Tätigkeiten des Mitarbeiters</TextBlock>
+            <TextBlock Foreground="DarkGreen" Text="{Binding FullName}"></TextBlock>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="4" SelectedItem="{Binding SelectedActivity}" ItemsSource="{Binding Activities, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Datum" MinWidth="110">
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedDateFormat="Short"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Date, StringFormat=dd.MM.yyyy}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Von" MinWidth="60" IsReadOnly="True" Binding="{Binding Path=StartTime, 
+                    StringFormat=HH:mm, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Bis" MinWidth="60" IsReadOnly="True" Binding="{Binding Path=StartTime, 
+                    StringFormat=HH:mm, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Tätigkeit" MinWidth="200" IsReadOnly="True" Binding="{Binding Path=ActivityText, 
+                    StringFormat=HH:mm, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Height="30" Grid.Row="2" Grid.Column="0" Margin="10,10,10,10" Command="{Binding CmdCreateActivity}">New</Button>
+        <Button Height="30" Grid.Row="2" Grid.Column="1" Margin="10,10,10,10" Command="{Binding CmdEditActivity}">Edit</Button>
+        <Button Height="30" Grid.Row="2" Grid.Column="2" Margin="10,10,10,10" Command="{Binding CmdDeleteActivity}">Delete</Button>
+        <Button Height="30" Grid.Row="2" Grid.Column="3" Margin="10,10,10,10" Command="{Binding CmdGoBack}">Back</Button>
     </Grid>
 </Window>
